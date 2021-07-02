@@ -1,5 +1,9 @@
 # IPaidThat-PHP
 
+[![Latest Stable Version](http://poser.pugx.org/ashraam/ipaidthat-php/v)](https://packagist.org/packages/ashraam/ipaidthat-php)
+[![Build Status](https://travis-ci.com/Ashraam/ipaidthat-php.svg?branch=master)](https://travis-ci.com/Ashraam/ipaidthat-php)
+[![License](http://poser.pugx.org/ashraam/ipaidthat-php/license)](https://packagist.org/packages/ashraam/ipaidthat-php)
+
 A PHP wrapper for [IPaidThat](https://ipaidthat.io/)'s API (V2).
 
 You can manage customers, invoices, invoice's items.
@@ -385,4 +389,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](LICENCE.md)
+[MIT](./LICENCE.md)
