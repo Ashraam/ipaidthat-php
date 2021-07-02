@@ -2,14 +2,14 @@
 
 namespace Ashraam\IpaidthatPhp\Tests;
 
+use Ashraam\IpaidthatPhp\Api\CustomersApi;
+use Ashraam\IpaidthatPhp\Entity\Customer;
+use Ashraam\IpaidthatPhp\Ipaidthat;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Ashraam\IpaidthatPhp\Ipaidthat;
-use GuzzleHttp\Handler\MockHandler;
-use Ashraam\IpaidthatPhp\Entity\Customer;
-use Ashraam\IpaidthatPhp\Api\CustomersApi;
 
 class CustomersTest extends TestCase
 {
@@ -34,12 +34,11 @@ class CustomersTest extends TestCase
         $customer = $api->customers()->update([]);
     }
 
-
     /** @test */
     public function it_can_list_customers()
     {
         $mock = new MockHandler([
-            new Response(200, [], '[{"id":1,"created":"2021-07-01T06:58:31Z","external_id":"999","name":"","first_name":"John","last_name":"Doe","siren":"","vat":"","address":"","email":"john.doe@gmail.com","phone":"","extra":""}]')
+            new Response(200, [], '[{"id":1,"created":"2021-07-01T06:58:31Z","external_id":"999","name":"","first_name":"John","last_name":"Doe","siren":"","vat":"","address":"","email":"john.doe@gmail.com","phone":"","extra":""}]'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -58,7 +57,7 @@ class CustomersTest extends TestCase
     public function it_can_get_customer()
     {
         $mock = new MockHandler([
-            new Response(200, [], '{"id":1,"created":"2021-07-01T06:58:31Z","external_id":"999","name":"","first_name":"John","last_name":"Doe","siren":"","vat":"","address":"","email":"john.doe@gmail.com","phone":"","extra":""}')
+            new Response(200, [], '{"id":1,"created":"2021-07-01T06:58:31Z","external_id":"999","name":"","first_name":"John","last_name":"Doe","siren":"","vat":"","address":"","email":"john.doe@gmail.com","phone":"","extra":""}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -77,7 +76,7 @@ class CustomersTest extends TestCase
     public function it_can_create_a_new_customer()
     {
         $mock = new MockHandler([
-            new Response(201, [], '{"id":1,"created":"2021-07-01T06:58:31Z","external_id":"999","name":"","first_name":"John","last_name":"Doe","siren":"","vat":"","address":"","email":"john.doe@gmail.com","phone":"","extra":""}')
+            new Response(201, [], '{"id":1,"created":"2021-07-01T06:58:31Z","external_id":"999","name":"","first_name":"John","last_name":"Doe","siren":"","vat":"","address":"","email":"john.doe@gmail.com","phone":"","extra":""}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -127,7 +126,7 @@ class CustomersTest extends TestCase
     {
         $mock = new MockHandler([
             new Response(204, []),
-            new Response(404, [], '{"detail":"Pas trouvé."}')
+            new Response(404, [], '{"detail":"Pas trouvé."}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);

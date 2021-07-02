@@ -2,12 +2,11 @@
 
 namespace Ashraam\IpaidthatPhp;
 
-use GuzzleHttp\Client;
-use InvalidArgumentException;
-use GuzzleHttp\ClientInterface;
-use Ashraam\IpaidthatPhp\Api\InvoicesApi;
 use Ashraam\IpaidthatPhp\Api\CustomersApi;
 use Ashraam\IpaidthatPhp\Api\InvoiceItemsApi;
+use Ashraam\IpaidthatPhp\Api\InvoicesApi;
+use GuzzleHttp\Client;
+use InvalidArgumentException;
 
 class Ipaidthat
 {
@@ -15,13 +14,13 @@ class Ipaidthat
 
     public function __construct($token, Client $client = null)
     {
-        if (!is_string($token)) {
-            throw new InvalidArgumentException("The token must be a string");
+        if (! is_string($token)) {
+            throw new InvalidArgumentException('The token must be a string');
         }
 
         if ($client) {
             $this->client = $client;
-            
+
             return;
         }
 
@@ -29,8 +28,8 @@ class Ipaidthat
             'base_uri' => 'https://ipaidthat.io/inv/api/v2/',
             'headers' => [
                 'Content-type' => 'application/json',
-                'Authorization' => "Token {$token}"
-            ]
+                'Authorization' => "Token {$token}",
+            ],
         ]);
     }
 

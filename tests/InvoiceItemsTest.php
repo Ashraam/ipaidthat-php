@@ -2,14 +2,14 @@
 
 namespace Ashraam\IpaidthatPhp\Tests;
 
+use Ashraam\IpaidthatPhp\Api\InvoiceItemsApi;
+use Ashraam\IpaidthatPhp\Entity\InvoiceItem;
+use Ashraam\IpaidthatPhp\Ipaidthat;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Ashraam\IpaidthatPhp\Ipaidthat;
-use GuzzleHttp\Handler\MockHandler;
-use Ashraam\IpaidthatPhp\Entity\InvoiceItem;
-use Ashraam\IpaidthatPhp\Api\InvoiceItemsApi;
 
 class InvoiceItemsTest extends TestCase
 {
@@ -23,7 +23,6 @@ class InvoiceItemsTest extends TestCase
         $this->assertInstanceOf(InvoiceItemsApi::class, $items);
     }
 
-
     /** @test */
     public function a_invoiceItem_instance_is_required_to_create_or_update_an_item()
     {
@@ -35,12 +34,11 @@ class InvoiceItemsTest extends TestCase
         $items = $api->invoiceItems()->update([]);
     }
 
-
     /** @test */
     public function it_can_list_items()
     {
         $mock = new MockHandler([
-            new Response(200, [], '[{"id":1,"invoice":1,"name":"Item","additional_info":"info","unit_price":10.5,"quantity":2,"tax_percent":20,"discount_percent":0,"position":1}]')
+            new Response(200, [], '[{"id":1,"invoice":1,"name":"Item","additional_info":"info","unit_price":10.5,"quantity":2,"tax_percent":20,"discount_percent":0,"position":1}]'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -56,12 +54,11 @@ class InvoiceItemsTest extends TestCase
         $this->assertSame($items[0]->name, 'Item');
     }
 
-
     /** @test */
     public function it_can_get_an_item()
     {
         $mock = new MockHandler([
-            new Response(200, [], '{"id":1,"invoice":1,"name":"Item","additional_info":"info","unit_price":10.5,"quantity":2,"tax_percent":20,"discount_percent":0,"position":1}')
+            new Response(200, [], '{"id":1,"invoice":1,"name":"Item","additional_info":"info","unit_price":10.5,"quantity":2,"tax_percent":20,"discount_percent":0,"position":1}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -76,12 +73,11 @@ class InvoiceItemsTest extends TestCase
         $this->assertSame($item->name, 'Item');
     }
 
-
     /** @test */
     public function it_can_add_an_item_to_an_invoice()
     {
         $mock = new MockHandler([
-            new Response(200, [], '{"id":1,"invoice":1,"name":"Item","additional_info":"info","unit_price":10.5,"quantity":2,"tax_percent":20,"discount_percent":0,"position":1}')
+            new Response(200, [], '{"id":1,"invoice":1,"name":"Item","additional_info":"info","unit_price":10.5,"quantity":2,"tax_percent":20,"discount_percent":0,"position":1}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -92,7 +88,7 @@ class InvoiceItemsTest extends TestCase
         $item = $api->invoiceItems()->create(new InvoiceItem([
             'invoice' => 1,
             'name' => 'Item',
-            'unit_price' => 10.5
+            'unit_price' => 10.5,
         ]));
 
         $this->assertInstanceOf(InvoiceItem::class, $item);
@@ -100,14 +96,13 @@ class InvoiceItemsTest extends TestCase
         $this->assertSame($item->name, 'Item');
     }
 
-
     /** @test */
     public function it_requires_invoice_id_to_add_an_item()
     {
         $this->expectException(\Exception::class);
 
         $mock = new MockHandler([
-            new Response(400, [], '{"invoice":["Ce champ est obligatoire."],"name":["Ce champ est obligatoire."],"unit_price":["Ce champ est obligatoire."]}')
+            new Response(400, [], '{"invoice":["Ce champ est obligatoire."],"name":["Ce champ est obligatoire."],"unit_price":["Ce champ est obligatoire."]}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -118,14 +113,13 @@ class InvoiceItemsTest extends TestCase
         $item = $api->invoiceItems()->create(new InvoiceItem([]));
     }
 
-
     /** @test */
     public function it_requires_a_name_id_to_add_an_item()
     {
         $this->expectException(\Exception::class);
 
         $mock = new MockHandler([
-            new Response(400, [], '{"invoice":["Ce champ est obligatoire."],"name":["Ce champ est obligatoire."],"unit_price":["Ce champ est obligatoire."]}')
+            new Response(400, [], '{"invoice":["Ce champ est obligatoire."],"name":["Ce champ est obligatoire."],"unit_price":["Ce champ est obligatoire."]}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -142,7 +136,7 @@ class InvoiceItemsTest extends TestCase
         $this->expectException(\Exception::class);
 
         $mock = new MockHandler([
-            new Response(400, [], '{"invoice":["Ce champ est obligatoire."],"name":["Ce champ est obligatoire."],"unit_price":["Ce champ est obligatoire."]}')
+            new Response(400, [], '{"invoice":["Ce champ est obligatoire."],"name":["Ce champ est obligatoire."],"unit_price":["Ce champ est obligatoire."]}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -186,7 +180,7 @@ class InvoiceItemsTest extends TestCase
     {
         $mock = new MockHandler([
             new Response(204, []),
-            new Response(404, [], '{"detail":"Pas trouvé."}')
+            new Response(404, [], '{"detail":"Pas trouvé."}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -195,7 +189,7 @@ class InvoiceItemsTest extends TestCase
         $api = new Ipaidthat('my_token', $client);
 
         $response = $api->invoiceItems()->delete(1);
-        
+
         $this->assertNull($response);
 
         $this->expectException(\Exception::class);
