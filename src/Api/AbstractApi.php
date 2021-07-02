@@ -2,8 +2,8 @@
 
 namespace Ashraam\IpaidthatPhp\Api;
 
-use GuzzleHttp\Client;
 use Ashraam\IpaidthatPhp\Contracts\ApiInterface;
+use GuzzleHttp\Client;
 
 abstract class AbstractApi implements ApiInterface
 {

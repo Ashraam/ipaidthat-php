@@ -13,7 +13,7 @@ final class Invoice extends AbstractEntity
     public $type;
 
     public $issue_date;
-    
+
     public $due_date;
 
     public $shipping;
@@ -31,7 +31,7 @@ final class Invoice extends AbstractEntity
     public $c_field_value_2;
 
     public $multi_page;
-    
+
     public $status;
 
     public $draft;

@@ -2,12 +2,12 @@
 
 namespace Ashraam\IpaidthatPhp\Tests;
 
+use Ashraam\IpaidthatPhp\Ipaidthat;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Ashraam\IpaidthatPhp\Ipaidthat;
-use GuzzleHttp\Handler\MockHandler;
 
 class BasicTest extends TestCase
 {
@@ -24,11 +24,11 @@ class BasicTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $api =  new Ipaidthat(['token']);
+        $api = new Ipaidthat(['token']);
 
-        $api =  new Ipaidthat(123);
+        $api = new Ipaidthat(123);
 
-        $api =  new Ipaidthat(true);
+        $api = new Ipaidthat(true);
     }
 
     /** @test */
@@ -37,14 +37,14 @@ class BasicTest extends TestCase
         $this->expectException(\GuzzleHttp\Exception\ClientException::class);
 
         $mock = new MockHandler([
-            new Response(401, [], '{"detail":"Token non valide."}')
+            new Response(401, [], '{"detail":"Token non valide."}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
 
         $api = new Ipaidthat('my_token');
-        
+
         $response = $api->customers()->list();
     }
 }

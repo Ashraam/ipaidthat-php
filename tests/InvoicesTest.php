@@ -2,14 +2,14 @@
 
 namespace Ashraam\IpaidthatPhp\Tests;
 
+use Ashraam\IpaidthatPhp\Api\InvoicesApi;
+use Ashraam\IpaidthatPhp\Entity\Invoice;
+use Ashraam\IpaidthatPhp\Ipaidthat;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Ashraam\IpaidthatPhp\Ipaidthat;
-use GuzzleHttp\Handler\MockHandler;
-use Ashraam\IpaidthatPhp\Entity\Invoice;
-use Ashraam\IpaidthatPhp\Api\InvoicesApi;
 
 class InvoicesTest extends TestCase
 {
@@ -38,7 +38,7 @@ class InvoicesTest extends TestCase
     public function it_can_list_invoices()
     {
         $mock = new MockHandler([
-            new Response(200, [], '[{"id":1,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}]')
+            new Response(200, [], '[{"id":1,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}]'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -58,7 +58,7 @@ class InvoicesTest extends TestCase
     public function it_can_get_an_invoice()
     {
         $mock = new MockHandler([
-            new Response(200, [], '{"id":1,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}')
+            new Response(200, [], '{"id":1,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -77,7 +77,7 @@ class InvoicesTest extends TestCase
     public function it_can_create_an_invoice()
     {
         $mock = new MockHandler([
-            new Response(201, [], '{"id":2,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}')
+            new Response(201, [], '{"id":2,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -97,7 +97,7 @@ class InvoicesTest extends TestCase
     {
         $mock = new MockHandler([
             new Response(200, [], '{"id":2,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":0,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"draft","paid":true}'),
-            new Response(200, [], '{"id":2,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":35,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"paid","paid":true}')
+            new Response(200, [], '{"id":2,"external_id":"string","issue_date":"2021-07-01","type":"invoice","invoice_number":"","due_date":"2021-07-01","shipping":35,"c_field_name_1":"","c_field_value_1":"","c_field_name_2":"","c_field_value_2":"","sender":0,"customer":0,"draft":true,"multi_page":true,"status":"paid","paid":true}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -125,7 +125,7 @@ class InvoicesTest extends TestCase
     public function it_can_validate_an_invoice()
     {
         $mock = new MockHandler([
-            new Response(201, [], '{"send_email":false}')
+            new Response(201, [], '{"send_email":false}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -144,7 +144,7 @@ class InvoicesTest extends TestCase
     {
         $mock = new MockHandler([
             new Response(204, []),
-            new Response(404, [], '{"detail":"Pas trouvé."}')
+            new Response(404, [], '{"detail":"Pas trouvé."}'),
         ]);
 
         $handlerStack = HandlerStack::create($mock);
@@ -153,7 +153,7 @@ class InvoicesTest extends TestCase
         $api = new Ipaidthat('my_token', $client);
 
         $response = $api->invoices()->delete(2);
-        
+
         $this->assertNull($response);
 
         $this->expectException(\Exception::class);
